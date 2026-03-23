@@ -21,7 +21,6 @@
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: "IBM Plex Sans", sans-serif;
@@ -32,13 +31,13 @@
     .wrap {
       width: min(1420px, calc(100vw - 32px));
       margin: 0 auto;
-      padding: 28px 0 40px;
+      padding: 24px 0 36px;
     }
 
     .topbar {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-end;
       gap: 16px;
       margin-bottom: 18px;
       padding: 0 4px;
@@ -54,6 +53,7 @@
     .sub {
       color: var(--muted);
       font-size: 14px;
+      margin-top: 4px;
     }
 
     .legend {
@@ -81,11 +81,12 @@
       border-radius: 50%;
       display: inline-block;
     }
+
     .dot.yes { background: var(--yes); }
     .dot.partial { background: var(--partial); }
     .dot.no { background: var(--no); }
 
-    .table-wrap {
+    .desktop-table {
       overflow: auto;
       background: var(--surface);
       border: 1px solid var(--line);
@@ -123,9 +124,7 @@
     }
 
     tbody tr:nth-child(even) { background: #fcfcfb; }
-    tbody tr.peak-row,
-    tbody td.peak-col,
-    tbody tr td.peak-col { background: var(--peak); }
+    tbody td.peak-col { background: var(--peak); }
 
     td {
       padding: 14px 16px;
@@ -152,6 +151,67 @@
     .partial { color: var(--partial); }
     .no { color: var(--no); }
 
+    .mobile-cards {
+      display: none;
+      gap: 14px;
+    }
+
+    .app-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .app-card.peak { border-color: #cfe5d6; background: var(--peak); }
+
+    .app-head {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .app-name {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.7);
+      padding: 6px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .feature-list {
+      display: grid;
+    }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--line);
+      align-items: center;
+    }
+
+    .feature-row:last-child { border-bottom: 0; }
+    .feature-label {
+      font-size: 13px;
+      line-height: 1.35;
+      color: var(--text);
+    }
+
     .footer {
       margin-top: 10px;
       padding: 0 4px;
@@ -160,10 +220,13 @@
       line-height: 1.6;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 920px) {
       .wrap { width: min(100vw - 16px, 1420px); padding-top: 16px; }
       .topbar { display: block; }
       .legend { margin-top: 12px; }
+      .desktop-table { display: none; }
+      .mobile-cards { display: grid; }
+      .footer { margin-top: 14px; }
     }
   </style>
 </head>
@@ -172,7 +235,7 @@
     <div class="topbar">
       <div>
         <h1>Swim Software Comparison</h1>
-        <div class="sub">Clean feature matrix including Peak</div>
+        <div class="sub">Desktop table + phone-friendly app cards</div>
       </div>
       <div class="legend">
         <div class="legend-item"><span class="dot yes"></span> Strong support</div>
@@ -181,7 +244,7 @@
       </div>
     </div>
 
-    <div class="table-wrap">
+    <div class="desktop-table">
       <table>
         <thead>
           <tr>
@@ -197,209 +260,112 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="feature">Workout builder / practice writing</td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status partial">● Some</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td class="peak-col"><span class="status yes">● Yes</span></td>
-          </tr>
-          <tr>
-            <td class="feature">Season / calendar planning</td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status partial">● Some</span></td>
-            <td><span class="status partial">● Some</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td class="peak-col"><span class="status yes">● Yes</span></td>
-          </tr>
-          <tr>
-            <td class="feature">Athlete roster management</td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status partial">● Some</span></td>
-            <td class="peak-col"><span class="status yes">● Yes</span></td>
-          </tr>
-          <tr>
-            <td class="feature">Coach ↔ athlete account model</td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status partial">● Some</span></td>
-            <td class="peak-col"><span class="status yes">● Yes</span></td>
-          </tr>
-          <tr>
-            <td class="feature">Training log / workout history</td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td class="peak-col"><span class="status partial">● Emerging</span></td>
-          </tr>
-          <tr>
-            <td class="feature">Performance analytics / dashboards</td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status partial">● Results only</span></td>
-            <td><span class="status no">● No</span></td>
-            <td class="peak-col"><span class="status partial">● Early</span></td>
-          </tr>
-          <tr>
-            <td class="feature">Meet entries / meet admin</td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td class="peak-col"><span class="status no">● No</span></td>
-          </tr>
-          <tr>
-            <td class="feature">Live meet results / heat / psych sheets</td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status no">● No</span></td>
-            <td class="peak-col"><span class="status no">● No</span></td>
-          </tr>
-          <tr>
-            <td class="feature">Competition management / planning</td>
-            <td><span class="status partial">● Some</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status partial">● Some</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td class="peak-col"><span class="status yes">● Yes</span></td>
-          </tr>
-          <tr>
-            <td class="feature">Attendance tracking</td>
-            <td><span class="status partial">● Some</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td class="peak-col"><span class="status partial">● Some</span></td>
-          </tr>
-          <tr>
-            <td class="feature">Messaging / push communication</td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status partial">● Some</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status partial">● Some</span></td>
-            <td><span class="status partial">● Community-ish</span></td>
-            <td><span class="status yes">● Notifications</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td class="peak-col"><span class="status no">● No</span></td>
-          </tr>
-          <tr>
-            <td class="feature">Billing / invoicing / payments</td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td class="peak-col"><span class="status no">● No</span></td>
-          </tr>
-          <tr>
-            <td class="feature">Video analysis</td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status partial">● Technique content</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td class="peak-col"><span class="status no">● No</span></td>
-          </tr>
-          <tr>
-            <td class="feature">Wellness / readiness tracking</td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status partial">● Some</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td class="peak-col"><span class="status no">● No</span></td>
-          </tr>
-          <tr>
-            <td class="feature">Wearables / Apple Watch / Garmin</td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status partial">● Unclear / partial</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td class="peak-col"><span class="status no">● No</span></td>
-          </tr>
-          <tr>
-            <td class="feature">Social / community / leaderboards</td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status partial">● Some</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status partial">● Boards</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td class="peak-col"><span class="status no">● No</span></td>
-          </tr>
-          <tr>
-            <td class="feature">Admin dashboard / multi-user operations</td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status yes">● Yes</span></td>
-            <td class="peak-col"><span class="status yes">● Yes</span></td>
-          </tr>
-          <tr>
-            <td class="feature">Athlete invites / account linking</td>
-            <td><span class="status partial">● Some</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status partial">● Some</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status no">● No</span></td>
-            <td><span class="status partial">● Some</span></td>
-            <td class="peak-col"><span class="status yes">● Yes</span></td>
-          </tr>
+          <tr><td class="feature">Workout builder / practice writing</td><td><span class="status yes">● Yes</span></td><td><span class="status yes">● Yes</span></td><td><span class="status yes">● Yes</span></td><td><span class="status yes">● Yes</span></td><td><span class="status partial">● Some</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td class="peak-col"><span class="status yes">● Yes</span></td></tr>
+          <tr><td class="feature">Season / calendar planning</td><td><span class="status yes">● Yes</span></td><td><span class="status partial">● Some</span></td><td><span class="status partial">● Some</span></td><td><span class="status yes">● Yes</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td class="peak-col"><span class="status yes">● Yes</span></td></tr>
+          <tr><td class="feature">Athlete roster management</td><td><span class="status yes">● Yes</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status yes">● Yes</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status partial">● Some</span></td><td class="peak-col"><span class="status yes">● Yes</span></td></tr>
+          <tr><td class="feature">Coach ↔ athlete account model</td><td><span class="status yes">● Yes</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status yes">● Yes</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status partial">● Some</span></td><td class="peak-col"><span class="status yes">● Yes</span></td></tr>
+          <tr><td class="feature">Training log / workout history</td><td><span class="status yes">● Yes</span></td><td><span class="status yes">● Yes</span></td><td><span class="status yes">● Yes</span></td><td><span class="status yes">● Yes</span></td><td><span class="status yes">● Yes</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td class="peak-col"><span class="status partial">● Emerging</span></td></tr>
+          <tr><td class="feature">Performance analytics / dashboards</td><td><span class="status yes">● Yes</span></td><td><span class="status yes">● Yes</span></td><td><span class="status yes">● Yes</span></td><td><span class="status yes">● Yes</span></td><td><span class="status yes">● Yes</span></td><td><span class="status partial">● Results only</span></td><td><span class="status no">● No</span></td><td class="peak-col"><span class="status partial">● Early</span></td></tr>
+          <tr><td class="feature">Meet entries / meet admin</td><td><span class="status yes">● Yes</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td class="peak-col"><span class="status no">● No</span></td></tr>
+          <tr><td class="feature">Live meet results / heat / psych sheets</td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status yes">● Yes</span></td><td><span class="status no">● No</span></td><td class="peak-col"><span class="status no">● No</span></td></tr>
+          <tr><td class="feature">Competition management / planning</td><td><span class="status partial">● Some</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status partial">● Some</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td class="peak-col"><span class="status yes">● Yes</span></td></tr>
+          <tr><td class="feature">Attendance tracking</td><td><span class="status partial">● Some</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status yes">● Yes</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status yes">● Yes</span></td><td class="peak-col"><span class="status partial">● Some</span></td></tr>
+          <tr><td class="feature">Messaging / push communication</td><td><span class="status yes">● Yes</span></td><td><span class="status partial">● Some</span></td><td><span class="status no">● No</span></td><td><span class="status partial">● Some</span></td><td><span class="status partial">● Community-ish</span></td><td><span class="status yes">● Notifications</span></td><td><span class="status yes">● Yes</span></td><td class="peak-col"><span class="status no">● No</span></td></tr>
+          <tr><td class="feature">Billing / invoicing / payments</td><td><span class="status yes">● Yes</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status yes">● Yes</span></td><td class="peak-col"><span class="status no">● No</span></td></tr>
+          <tr><td class="feature">Video analysis</td><td><span class="status no">● No</span></td><td><span class="status partial">● Technique content</span></td><td><span class="status no">● No</span></td><td><span class="status yes">● Yes</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td class="peak-col"><span class="status no">● No</span></td></tr>
+          <tr><td class="feature">Wellness / readiness tracking</td><td><span class="status no">● No</span></td><td><span class="status partial">● Some</span></td><td><span class="status no">● No</span></td><td><span class="status yes">● Yes</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td class="peak-col"><span class="status no">● No</span></td></tr>
+          <tr><td class="feature">Wearables / Apple Watch / Garmin</td><td><span class="status no">● No</span></td><td><span class="status yes">● Yes</span></td><td><span class="status yes">● Yes</span></td><td><span class="status partial">● Unclear / partial</span></td><td><span class="status yes">● Yes</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td class="peak-col"><span class="status no">● No</span></td></tr>
+          <tr><td class="feature">Social / community / leaderboards</td><td><span class="status no">● No</span></td><td><span class="status partial">● Some</span></td><td><span class="status no">● No</span></td><td><span class="status partial">● Boards</span></td><td><span class="status yes">● Yes</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td class="peak-col"><span class="status no">● No</span></td></tr>
+          <tr><td class="feature">Admin dashboard / multi-user operations</td><td><span class="status yes">● Yes</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status yes">● Yes</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status yes">● Yes</span></td><td class="peak-col"><span class="status yes">● Yes</span></td></tr>
+          <tr><td class="feature">Athlete invites / account linking</td><td><span class="status partial">● Some</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status partial">● Some</span></td><td><span class="status no">● No</span></td><td><span class="status no">● No</span></td><td><span class="status partial">● Some</span></td><td class="peak-col"><span class="status yes">● Yes</span></td></tr>
         </tbody>
       </table>
     </div>
 
-    <div class="footer">Public pages and app listings were used for the market apps; Peak is based on your current local app structure and README.</div>
+    <div class="mobile-cards">
+      <div class="app-card"><div class="app-head"><div class="app-name">Commit</div><div class="badge">Club OS</div></div><div class="feature-list">
+        <div class="feature-row"><div class="feature-label">Workout builder / practice writing</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Season / calendar planning</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Athlete roster management</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Coach ↔ athlete account model</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Training log / workout history</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Performance analytics / dashboards</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Meet entries / meet admin</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Competition management / planning</div><div class="status partial">● Some</div></div>
+        <div class="feature-row"><div class="feature-label">Attendance tracking</div><div class="status partial">● Some</div></div>
+        <div class="feature-row"><div class="feature-label">Messaging / push communication</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Billing / payments</div><div class="status yes">● Yes</div></div>
+      </div></div>
+
+      <div class="app-card"><div class="app-head"><div class="app-name">MySwimPro</div><div class="badge">Swimmer app</div></div><div class="feature-list">
+        <div class="feature-row"><div class="feature-label">Workout builder / practice writing</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Season / calendar planning</div><div class="status partial">● Some</div></div>
+        <div class="feature-row"><div class="feature-label">Training log / workout history</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Performance analytics / dashboards</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Video analysis / technique</div><div class="status partial">● Technique content</div></div>
+        <div class="feature-row"><div class="feature-label">Wellness / readiness</div><div class="status partial">● Some</div></div>
+        <div class="feature-row"><div class="feature-label">Wearables / Apple Watch / Garmin</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Social / community / leaderboards</div><div class="status partial">● Some</div></div>
+      </div></div>
+
+      <div class="app-card"><div class="app-head"><div class="app-name">Swim Coach</div><div class="badge">Swimmer app</div></div><div class="feature-list">
+        <div class="feature-row"><div class="feature-label">Workout builder / practice writing</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Season / calendar planning</div><div class="status partial">● Some</div></div>
+        <div class="feature-row"><div class="feature-label">Training log / workout history</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Performance analytics / dashboards</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Wearables / Apple Watch / Garmin</div><div class="status yes">● Yes</div></div>
+      </div></div>
+
+      <div class="app-card"><div class="app-head"><div class="app-name">Mako</div><div class="badge">Performance platform</div></div><div class="feature-list">
+        <div class="feature-row"><div class="feature-label">Workout builder / practice writing</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Season / calendar planning</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Athlete roster management</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Coach ↔ athlete account model</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Training log / workout history</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Performance analytics / dashboards</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Attendance tracking</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Video analysis</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Wellness / readiness</div><div class="status yes">● Yes</div></div>
+      </div></div>
+
+      <div class="app-card"><div class="app-head"><div class="app-name">Swim.com</div><div class="badge">Tracking + social</div></div><div class="feature-list">
+        <div class="feature-row"><div class="feature-label">Workout builder / practice writing</div><div class="status partial">● Some</div></div>
+        <div class="feature-row"><div class="feature-label">Training log / workout history</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Performance analytics / dashboards</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Messaging / community</div><div class="status partial">● Community-ish</div></div>
+        <div class="feature-row"><div class="feature-label">Wearables / Apple Watch / Garmin</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Social / community / leaderboards</div><div class="status yes">● Yes</div></div>
+      </div></div>
+
+      <div class="app-card"><div class="app-head"><div class="app-name">Meet Mobile</div><div class="badge">Meet utility</div></div><div class="feature-list">
+        <div class="feature-row"><div class="feature-label">Live meet results / heat / psych sheets</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Performance analytics / dashboards</div><div class="status partial">● Results only</div></div>
+        <div class="feature-row"><div class="feature-label">Messaging / notifications</div><div class="status yes">● Notifications</div></div>
+      </div></div>
+
+      <div class="app-card"><div class="app-head"><div class="app-name">TeamCheck</div><div class="badge">Light team ops</div></div><div class="feature-list">
+        <div class="feature-row"><div class="feature-label">Athlete roster management</div><div class="status partial">● Some</div></div>
+        <div class="feature-row"><div class="feature-label">Coach ↔ athlete account model</div><div class="status partial">● Some</div></div>
+        <div class="feature-row"><div class="feature-label">Attendance tracking</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Messaging / push communication</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Billing / payments</div><div class="status yes">● Yes</div></div>
+      </div></div>
+
+      <div class="app-card peak"><div class="app-head"><div class="app-name">Peak</div><div class="badge">Your app</div></div><div class="feature-list">
+        <div class="feature-row"><div class="feature-label">Workout builder / practice writing</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Season / calendar planning</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Athlete roster management</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Coach ↔ athlete account model</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Training log / workout history</div><div class="status partial">● Emerging</div></div>
+        <div class="feature-row"><div class="feature-label">Performance analytics / dashboards</div><div class="status partial">● Early</div></div>
+        <div class="feature-row"><div class="feature-label">Competition management / planning</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Attendance tracking</div><div class="status partial">● Some</div></div>
+        <div class="feature-row"><div class="feature-label">Admin dashboard / multi-user operations</div><div class="status yes">● Yes</div></div>
+        <div class="feature-row"><div class="feature-label">Athlete invites / account linking</div><div class="status yes">● Yes</div></div>
+      </div></div>
+    </div>
+
+    <div class="footer">Public product pages were used for the market apps; Peak is based on your current local app structure and README.</div>
   </div>
 </body>
 </html>
